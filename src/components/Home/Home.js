@@ -30,9 +30,23 @@ export default class Home extends Component {
             totalPages: result.total_pages
           },
           () => console.log(this.state.movies)
-          //    () =>console.log('image : '+this.state.heroImage)
         )
       );
+  }
+
+  loadMoreItems() {
+    let link = "";
+    this.setState({ loading: true });
+
+    if (this.state.searchTerm === "") {
+      link = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${this
+        .state.currentPage + 1}`;
+    } else {
+      link = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query${
+        this.state.searchTerm
+      }$page=${this.state.currentPage + 1}`;
+    }
+    this.fetchItems(link);
   }
 
   render() {
