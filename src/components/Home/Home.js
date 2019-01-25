@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { API_URL, API_KEY } from "../../config/";
+import {
+  API_URL,
+  API_KEY,
+  IMAGE_BASE_URL,
+  POSTER_SIZE,
+  BACKDROP_SIZE
+} from "../../config/";
+import HeroImage from '../elements/HeroImage/HeroImage';
 
 export default class Home extends Component {
   state = {
@@ -50,6 +57,20 @@ export default class Home extends Component {
   }
 
   render() {
-    return <div />;
+    return (
+      <div className="rmdb-home">
+        {this.state.heroImage ? (
+          <div>
+            <HeroImage
+              image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${
+                this.state.heroImage.backdrop_path
+              }`}
+              title={this.state.heroImage.original_title}
+              text={this.state.heroImage.overview}
+            />
+          </div>
+        ) : null}
+      </div>
+    );
   }
 }
