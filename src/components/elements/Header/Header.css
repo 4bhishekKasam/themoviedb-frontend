@@ -22,7 +22,7 @@
 .tmdb-logo {
   width: 122px;
   margin-top: 25px;
-  float: right;
+  float: left;
 }
 
 @media screen and (max-width: 500px) {
