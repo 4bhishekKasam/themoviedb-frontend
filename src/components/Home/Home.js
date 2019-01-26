@@ -11,6 +11,7 @@ import SearchBar from "../elements/SearchBar/SearchBar";
 import FourColGrid from "../elements/FourColGrid/FourColGrid";
 import MovieThumb from "../elements/MovieThumb/MovieThumb";
 import Spinner from "../elements/Spinner/Spinner";
+import LoadMoreBtn from "../elements/LoadMoreBtn/LoadMoreBtn";
 
 export default class Home extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class Home extends Component {
       searchTerm: ""
     };
     this.searchItems = this.searchItems.bind(this);
+    this.loadMoreItems = this.loadMoreItems.bind(this);
   }
   componentDidMount() {
     this.setState({ loading: true });
@@ -49,18 +51,18 @@ export default class Home extends Component {
   }
 
   loadMoreItems() {
-    let link = "";
+    let endpoint = "";
     this.setState({ loading: true });
 
     if (this.state.searchTerm === "") {
-      link = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${this
+      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${this
         .state.currentPage + 1}`;
     } else {
-      link = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query${
+      endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query${
         this.state.searchTerm
       }$page=${this.state.currentPage + 1}`;
     }
-    this.fetchItems(link);
+    this.fetchItems(endpoint);
   }
 
   searchItems(searchTerm) {
@@ -104,7 +106,8 @@ export default class Home extends Component {
                   image={
                     element.poster_path
                       ? `${IMAGE_BASE_URL}${POSTER_SIZE}/${element.poster_path}`
-                      : "./images/no_image.jpg"
+                      : ""
+                    //     : "./images/no_image.jpg"
                   }
                   movieId={element.id}
                   movieName={element.original_title}
@@ -113,6 +116,10 @@ export default class Home extends Component {
             })}
           </FourColGrid>
           {this.state.loading ? <Spinner /> : null}
+          {this.state.currentPage <= this.state.totalPages &&
+          !this.state.loading ? (
+            <LoadMoreBtn text="Load More" onClick={this.loadMoreItems} />
+          ) : null}
         </div>
       </div>
     );
