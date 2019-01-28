@@ -5,6 +5,8 @@ import Spinner from "../elements/Spinner/Spinner";
 import FourColGrid from "../elements/FourColGrid/FourColGrid";
 import Navigation from "../elements/Navigation/Navigation";
 import MovieInfo from "../elements/MovieInfo/MovieInfo";
+import MovieInfoBar from "../elements/MovieInfoBar/MovieInfoBar";
+import Actor from "../elements/Actor/Actor";
 
 export default class Movie extends Component {
   constructor(props) {
@@ -80,7 +82,25 @@ export default class Movie extends Component {
         {this.state.movie ? (
           <div>
             <Navigation movie={this.props.location.movieName} />
-          
+            <MovieInfo
+              movie={this.state.movie}
+              directors={this.state.directors}
+            />
+            <MovieInfoBar
+              time={this.state.movie.runtime}
+              budget={this.state.movie.budget}
+              revenue={this.state.movie.revenue}
+            />
+          </div>
+        ) : null}
+
+        {this.state.actors ? (
+          <div className="rmdb-moviegrid">
+            <FourColGrid header={"Actors"}>
+              {this.state.actors.map((element, i) => {
+                return <Actor key={i} actor={element} />;
+              })}
+            </FourColGrid>
           </div>
         ) : null}
       </div>
