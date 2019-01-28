@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./components/elements/Header/Header";
 import Home from "./components/Home/Home";
+import Movie from "./components/Movie/Movie";
 import "./App.css";
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
           <Header />
           <Switch>
             <Route path="/" component={Home} exact />
+            <Route path="/:movieId" component={Movie} exact />
           </Switch>
         </React.Fragment>
       </BrowserRouter>
